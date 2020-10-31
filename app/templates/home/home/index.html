@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block menu %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+            <li><a href="{{ url_for('administrateur.loginAdmin') }}">Administrateur</a></li>
+            <li><a href="{{ url_for('professeur.loginProf') }}">Professeur</a></li>
+            <li><a href="{{ url_for('etudiant.loginEtud') }}">Etudiant</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block body %}
+<div class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="intro-message">
+                    <h1>Project Flask Université Paris 8</h1>
+                    <h3>Master 1 Informatique</h3>
+                    <hr class="intro-divider">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

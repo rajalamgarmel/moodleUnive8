@@ -1,5 +1,6 @@
 # app/models.py
-from flask_login import UserMixin
+from flask import sessions
+from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login_manager
@@ -25,7 +26,6 @@ class Administrateur(UserMixin, db.Model):
     sexe_admin = db.Column(db.String(60), index=True)
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
-    username = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     departement_id = db.Column(db.Integer, db.ForeignKey('departement.id'))
     is_superadmin = db.Column(db.Boolean, default=False)
@@ -69,7 +69,6 @@ class Etudiant(UserMixin, db.Model):
     sexe_etud = db.Column(db.String(60), index=True)
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
-    username = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     formation_id = db.Column(db.Integer, db.ForeignKey('formation.id'))
 
@@ -112,9 +111,10 @@ class Professeur(UserMixin, db.Model):
     sexe_prof = db.Column(db.String(60), index=True)
     date_naissance = db.Column(db.Date(), index=True)
     email = db.Column(db.String(60), index=True, unique=True)
-    username = db.Column(db.String(60), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    matiere_id = db.Column(db.Integer, db.ForeignKey('matiere.id'))
+    matiere = db.relationship('Matiere', backref='professeur',
+                            lazy='dynamic')
+
 
     @property
     def password(self):
@@ -189,6 +189,7 @@ class Matiere(db.Model):
     label_matiere = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
     formation_id = db.Column(db.Integer, db.ForeignKey('formation.id'))
+    professeur_id = db.Column(db.Integer, db.ForeignKey('professeur.id'))
     cours = db.relationship('Cours', backref='matiere',
                             lazy='dynamic')
     announce = db.relationship('Announce', backref='matiere',
@@ -234,4 +235,4 @@ class Departement(db.Model):
                                 lazy='dynamic')
 
     def __repr__(self):
-        return '<Departement: {}>'.format(self.name)
+        return '<Departement: {}>'.format(self.label_departement)

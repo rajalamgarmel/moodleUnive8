@@ -1,0 +1,80 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Formations{% endblock %}
+{% block menu %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+               <li><a href="{{ url_for('administrateur.AccueilAdmin')}}">Accueil</a></li>
+                <li><a href="{{ url_for('formations.list_formations')}}">Formations</a></li>
+                <li><a href="">Matiéres</a></li>
+                <li><a href="">Etudiants</a></li>
+                <li><a href="">Announces</a></li>
+                <li><a href="{{ url_for('administrateur.logoutAdmin')}}">Logout</a></li>
+                <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_admin }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;">Formations</h1>
+        {% if formations %}
+          <hr class="intro-divider">
+          <div class="center">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th width="15%"> Label Formation </th>
+                  <th width="40%"> Description </th>
+                    <th width="40%"> Departement </th>
+                  <th width="15%"> Edit </th>
+                  <th width="15%"> Delete </th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for formation in formations %}
+                <tr>
+                  <td> <a href="{{ url_for('formations.edit_formations', id=formation.id) }}"/>
+                  {{   formation.label_formation }}
+                  </a></td>
+                  <td> {{ formation.description }} </td>
+                    <td> {{ formation.departement }} </td>
+                  <td>
+                    <a href="{{ url_for('formations.edit_formations', id=formation.id) }}">
+                      <i class="fa fa-pencil"></i> Edit 
+                    </a>
+                  </td>
+                  <td>
+                    <a href="{{ url_for('formations.delete_formations', id=formation.id) }}">
+                      <i class="fa fa-trash"></i> Delete 
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div style="text-align: center">
+        {% else %}
+          <div style="text-align: center">
+            <h3> No departments have been added. </h3>
+            <hr class="intro-divider">
+        {% endif %}
+          <a href="{{ url_for('formations.add_formations') }}" class="btn btn-default btn-lg">
+            <i class="fa fa-plus"></i>
+            Add Formations
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+{% endblock %}

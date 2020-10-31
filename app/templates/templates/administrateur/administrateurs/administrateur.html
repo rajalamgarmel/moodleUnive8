@@ -1,0 +1,41 @@
+<!-- app/templates/admin/departments/department.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_administrateurs %}
+        Add Administrateurs
+    {% else %}
+        Edit Administrateurs
+    {% endif %}
+{% endblock %}
+{% block menu %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{url_for('administrateur.AccueilSuperAdm')}}">Accueil</a></li>
+                <li><a href="{{ url_for('departement.list_departements') }}">Departements</a></li>
+                <li><a href="{{ url_for('administrateurs.list_administrateurs') }}">Administrateurs</a></li>
+                <li><a href="{{url_for('administrateur.logoutAdmin')}}">Logout</a></li>
+              <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_admin }}!</a></li>
+            </ul>
+        </div>
+{% endblock %}
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_administrateurs %}
+                <h1>Add Administrateurs</h1>
+            {% else %}
+                <h1>Edit Administrateurs</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

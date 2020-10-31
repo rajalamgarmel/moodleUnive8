@@ -1,0 +1,26 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block menu %}
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{url_for('home.homepage')}}">Home</a></li>
+            <li><a href="{{url_for('administrateur.loginAdmin')}}">Administrateur</a></li>
+            <li><a href="{{url_for('professeur.loginProf')}}">Professeur</a></li>
+            <li><a href="{{url_for('etudiant.loginEtud')}}">Etudiant</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block body %}
+<div class="content-section">
+  <br/>
+  {{ utils.flashed_messages() }}
+  <br/>
+  <div class="center">
+    <h1>Login to your account Etudiant</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}

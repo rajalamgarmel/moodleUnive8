@@ -1,0 +1,45 @@
+<!-- app/templates/admin/departments/department.html -->
+
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_formations %}
+        Add Formation
+    {% else %}
+        Edit Formation
+    {% endif %}
+{% endblock %}
+{% block menu %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+               <li><a href="{{ url_for('administrateur.AccueilAdmin')}}">Accueil</a></li>
+                <li><a href="{{ url_for('formations.list_formations')}}">Formations</a></li>
+                <li><a href="">Matiéres</a></li>
+                <li><a href="">Etudiants</a></li>
+                <li><a href="">Announces</a></li>
+                <li><a href="{{ url_for('administrateur.logoutAdmin')}}">Logout</a></li>
+                <li><a><i class="fa fa-user"></i>  Bonjour, {{ current_user.nom_admin }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+{% endblock %}
+{% block body %}
+<div class="content-section">
+ <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="center">
+            {% if add_formations %}
+                <h1>Add Formations</h1>
+            {% else %}
+                <h1>Edit Formations</h1>
+            {% endif %}
+            <br/>
+            {{ wtf.quick_form(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
